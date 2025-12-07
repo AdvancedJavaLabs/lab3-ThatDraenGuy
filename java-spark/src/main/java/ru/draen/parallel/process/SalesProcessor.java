@@ -18,7 +18,7 @@ public class SalesProcessor {
         JavaRDD<CalcData> result = sales
                 .keyBy(SaleData::getCategory)
                 .aggregateByKey(
-                        new CalcData(),
+                        CalcData.empty(),
                         (acc, item) -> {
                             acc.setQuantity(acc.getQuantity() + item.getQuantity());
                             acc.setRevenue(acc.getRevenue() + item.getPrice());

@@ -7,17 +7,25 @@ import org.apache.spark.sql.types.StructType;
 import ru.draen.parallel.model.schema.BaseSchema;
 import ru.draen.parallel.model.schema.Schema;
 
+import java.io.Serializable;
+
 @Data
-public class SaleData {
+public class SaleData implements Serializable {
     public static final Schema<SaleData> SCHEMA = new BaseSchema<SaleData>() {
         @Override
         public StructType sparkSchema() {
-            return StructType.fromDDL("struct<transaction_id INT, product_id INT, category STRING, price DOUBLE, quantity INT>");
+            return StructType.fromDDL("transaction_id LONG, product_id LONG, category STRING, price DOUBLE, quantity LONG");
         }
 
         @Override
         public SaleData fromRow(Row row) {
-            throw new NotImplementedException();
+            SaleData data = new SaleData();
+            data.setTransactionId(get(row, "transaction_id"));
+            data.setProductId(get(row, "product_id"));
+            data.setCategory(get(row, "category"));
+            data.setPrice(get(row, "price"));
+            data.setQuantity(get(row, "quantity"));
+            return data;
         }
 
         @Override

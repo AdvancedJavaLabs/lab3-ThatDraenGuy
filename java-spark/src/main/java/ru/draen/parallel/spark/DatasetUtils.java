@@ -14,6 +14,7 @@ public class DatasetUtils {
         Dataset<Row> dataset = ctx.getSparkSs().read()
                 .schema(schema.sparkSchema())
                 .format("csv")
+                .option("header","true")
                 .load(path);
 
         return dataset.javaRDD().map(schema::fromRow);
