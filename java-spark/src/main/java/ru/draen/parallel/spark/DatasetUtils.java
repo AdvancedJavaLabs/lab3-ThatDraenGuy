@@ -8,6 +8,9 @@ import org.apache.spark.sql.Row;
 import ru.draen.parallel.model.AppContext;
 import ru.draen.parallel.model.schema.Schema;
 
+import static org.apache.spark.sql.functions.desc;
+
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DatasetUtils {
     public static<T> JavaRDD<T> readData(AppContext ctx, String path, Schema<T> schema) {
@@ -22,10 +25,12 @@ public class DatasetUtils {
 
     public static<T> void writeData(AppContext ctx, String path, Schema<T> schema, JavaRDD<T> data) {
         Dataset<Row> dataset = ctx.getSparkSs()
-                .createDataFrame(data.map(schema::toRow), schema.sparkSchema());
+                .createDataFrame(data.map(schema::toRow), schema.sparkSchema())
+                .sort(desc("revenue"));
         dataset.write()
                 .mode("overwrite")
                 .format("csv")
+                .option("header","true")
                 .save(path);
     }
 }

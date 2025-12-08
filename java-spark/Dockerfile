@@ -15,7 +15,7 @@ ENV JAR_FILEPATH="/opt/hadoop/applications/job.jar"
 ENV CLASS_TO_RUN="ru.draen.parallel.App"
 ENV PARAMS="/data/input /data/output"
 
-ADD job/run.sh /run.sh
+ADD java-spark/docker/run.sh /run.sh
 RUN chmod a+x /run.sh
 
 CMD ["/run.sh"]

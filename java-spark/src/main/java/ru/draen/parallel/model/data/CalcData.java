@@ -16,7 +16,7 @@ public class CalcData implements Serializable {
     public static final Schema<CalcData> SCHEMA = new BaseSchema<CalcData>() {
         @Override
         public StructType sparkSchema() {
-            return StructType.fromDDL("category STRING, revenue DOUBLE, quantity LONG");
+            return StructType.fromDDL("category STRING, revenue DOUBLE, quantitySum LONG");
         }
 
         @Override

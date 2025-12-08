@@ -19,8 +19,8 @@ public class App {
 
         AppContext ctx = new AppContext(sparkCtx, ss, new HDFSHelper(FileSystem.get(hadoopConf)));
         AppConfig cfg = new AppConfig();
-        cfg.setInputPath("/data/input/");
-        cfg.setOutputPath("/data/output/");
+        cfg.setInputPath(args[0]);
+        cfg.setOutputPath(args[1]);
 
         new SalesProcessor(ctx, cfg).process();
     }
